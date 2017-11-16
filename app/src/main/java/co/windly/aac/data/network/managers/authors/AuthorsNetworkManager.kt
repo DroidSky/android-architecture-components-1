@@ -1,6 +1,22 @@
 package co.windly.aac.data.network.managers.authors
 
+import co.windly.aac.data.domain.models.authors.Author
 import co.windly.aac.data.network.services.AuthorsService
+import io.reactivex.Observable
+import org.modelmapper.ModelMapper
 import javax.inject.Inject
 
-class AuthorsNetworkManager @Inject constructor(authorsService: AuthorsService)
+@Suppress("MemberVisibilityCanPrivate")
+class AuthorsNetworkManager @Inject constructor() {
+
+  @Inject lateinit var service: AuthorsService
+  @Inject lateinit var mapper: ModelMapper
+
+  fun getAuthors(): Observable<List<Author>> {
+    return this.service.getAuthors()
+      .flatMapIterable { it }
+      .map { this.mapper.map(it, Author::class.java) }
+      .toList()
+      .toObservable()
+  }
+}
