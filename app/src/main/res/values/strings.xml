@@ -2,7 +2,8 @@
 <resources>
 	<eat-comment />
 	<string name="app_name">Android Architecture Components</string>
-	<string name="title_home">Home</string>
-	<string name="title_dashboard">Dashboard</string>
-	<string name="title_notifications">Notifications</string>
+	<string name="title_authors">Authors</string>
+	<string name="title_publishing_houses">Publishing Houses</string>
+	<string name="title_covers">Covers</string>
+	<string name="title_books">Books</string>
 </resources>
