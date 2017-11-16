@@ -20,7 +20,11 @@ import co.windly.aac.data.database.models.publishinghouses.PublishingHouseEntity
 )
 abstract class AndroidDatabase : RoomDatabase() {
 
-  abstract fun databaseDao(): DatabaseDao
+  companion object {
+    val DATABASE_NAME = "aac_database.sqlite3"
+  }
+
+  abstract fun allDao(): AllDao
 
   abstract fun authorsDao(): AuthorsDao
 

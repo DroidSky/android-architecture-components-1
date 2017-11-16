@@ -5,7 +5,7 @@ import android.arch.persistence.room.Query
 import android.arch.persistence.room.Transaction
 
 @Dao
-abstract class DatabaseDao {
+abstract class AllDao {
 
   @Query("DELETE FROM authors")
   abstract fun clearAuthors()

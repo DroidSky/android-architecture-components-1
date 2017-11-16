@@ -3,7 +3,7 @@ package co.windly.aac.data.database.daos
 import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.*
 import co.windly.aac.data.database.models.authors.AuthorEntity
-import co.windly.aac.data.database.models.authors.SimpleAuthorProjection
+import co.windly.aac.data.database.models.authors.AuthorFirstName
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.Single
@@ -202,7 +202,7 @@ interface AuthorsDao {
   fun getIdsOfAllAuthors(): List<Long>
 
   @Query("SELECT id, first_name FROM authors")
-  fun getAllAuthorsAsSimpleAuthorProjection(): List<SimpleAuthorProjection>
+  fun getAllAuthorsAsSimpleAuthorProjection(): List<AuthorFirstName>
 
   //endregion
 
