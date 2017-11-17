@@ -31,6 +31,15 @@ data class BookEntity(
   @ColumnInfo(name = "quantity")
   var quantity: Int = 0,
 
+  @ColumnInfo(name = "active")
+  var acrtive: Boolean = true,
+
+  @ColumnInfo(name = "updated_at")
+  var updatedAt: String = EMPTY,
+
+  @ColumnInfo(name = "created_at")
+  var CreatedAt: String = EMPTY,
+
   @ColumnInfo(name = "cover_id")
   @ForeignKey(
     entity = CoverEntity::class,

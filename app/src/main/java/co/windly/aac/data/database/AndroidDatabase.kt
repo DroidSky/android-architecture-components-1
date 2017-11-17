@@ -2,6 +2,8 @@ package co.windly.aac.data.database
 
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.RoomDatabase
+import android.arch.persistence.room.TypeConverters
+import co.windly.aac.data.database.converters.DateTimeConverter
 import co.windly.aac.data.database.daos.*
 import co.windly.aac.data.database.models.authors.AuthorEntity
 import co.windly.aac.data.database.models.books.BookEntity
@@ -16,6 +18,11 @@ import co.windly.aac.data.database.models.publishinghouses.PublishingHouseEntity
     BookEntity::class,
     CoverEntity::class,
     PublishingHouseEntity::class
+  )
+)
+@TypeConverters(
+  value = *arrayOf(
+    DateTimeConverter::class
   )
 )
 abstract class AndroidDatabase : RoomDatabase() {

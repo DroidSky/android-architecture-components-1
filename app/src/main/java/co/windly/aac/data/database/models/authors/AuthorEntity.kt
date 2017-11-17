@@ -16,5 +16,14 @@ data class AuthorEntity(
   var firstName: String = EMPTY,
 
   @ColumnInfo(name = "last_name")
-  var lastName: String = EMPTY
+  var lastName: String = EMPTY,
+
+  @ColumnInfo(name = "active")
+  var acrtive: Boolean = true,
+
+  @ColumnInfo(name = "updated_at")
+  var updatedAt: String = EMPTY,
+
+  @ColumnInfo(name = "created_at")
+  var CreatedAt: String = EMPTY
 )

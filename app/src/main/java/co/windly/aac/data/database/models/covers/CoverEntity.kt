@@ -13,5 +13,14 @@ data class CoverEntity(
   var id: Long,
 
   @ColumnInfo(name = "name")
-  var name: String = EMPTY
+  var name: String = EMPTY,
+
+  @ColumnInfo(name = "active")
+  var acrtive: Boolean = true,
+
+  @ColumnInfo(name = "updated_at")
+  var updatedAt: String = EMPTY,
+
+  @ColumnInfo(name = "created_at")
+  var CreatedAt: String = EMPTY
 )
