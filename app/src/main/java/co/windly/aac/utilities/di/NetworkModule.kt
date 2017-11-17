@@ -1,4 +1,4 @@
-package co.windly.aac.utilities.dependencyinjection
+package co.windly.aac.utilities.di
 
 import co.windly.aac.data.network.interceptors.HeaderAcceptInterceptor
 import co.windly.aac.data.network.interceptors.HeaderContentTypeInterceptor
@@ -45,8 +45,8 @@ class NetworkModule {
   @Singleton
   fun provideOkHttpClient(
     @Named("debug") builder: OkHttpClient.Builder,
-    @Named("content-type") headerContentTypeInterceptor: HeaderContentTypeInterceptor,
-    @Named("accept") headerAcceptInterceptor: HeaderAcceptInterceptor
+    @Named("content-type") headerContentTypeInterceptor: Interceptor,
+    @Named("accept") headerAcceptInterceptor: Interceptor
   ): OkHttpClient {
     return builder.apply {
       this.addInterceptor(headerContentTypeInterceptor)

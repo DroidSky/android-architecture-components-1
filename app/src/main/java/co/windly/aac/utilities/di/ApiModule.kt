@@ -1,4 +1,4 @@
-package co.windly.aac.utilities.dependencyinjection
+package co.windly.aac.utilities.di
 
 import co.windly.aac.BuildConfig
 import co.windly.aac.data.network.services.AuthorsService

@@ -1,7 +1,6 @@
 package co.windly.aac.presentation.base
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +11,7 @@ import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.mikepenz.fastadapter.items.AbstractItem
 import kotlinx.android.synthetic.main.fragment_list.*
 
-abstract class BaseListFragment : Fragment() {
+abstract class BaseListFragment : BaseFragment() {
 
   private var adapter: ItemAdapter<AbstractItem<*, *>> = ItemAdapter()
 

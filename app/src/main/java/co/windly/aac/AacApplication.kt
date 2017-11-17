@@ -1,16 +1,26 @@
 package co.windly.aac
 
+import android.app.Activity
 import android.app.Application
-import co.windly.aac.utilities.dependencyinjection.ApplicationModule
-import co.windly.aac.utilities.dependencyinjection.DaggerApplicationComponent
-import co.windly.aac.utilities.dependencyinjection.DatabaseModule
+import co.windly.aac.utilities.di.DaggerApplicationComponent
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasActivityInjector
+import javax.inject.Inject
 
-class AacApplication : Application() {
 
-  val applicationComponent by lazy {
+class AacApplication : Application(), HasActivityInjector {
+
+  @Inject
+  lateinit var injector: DispatchingAndroidInjector<Activity>
+
+  override fun onCreate() {
+    super.onCreate()
     DaggerApplicationComponent.builder()
-      .applicationModule(ApplicationModule(this))
-      .databaseModule(DatabaseModule(this))
+      .application(this)
       .build()
+      .inject(this)
   }
+
+  override fun activityInjector(): AndroidInjector<Activity> = this.injector
 }

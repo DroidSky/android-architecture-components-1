@@ -1,4 +1,4 @@
-package co.windly.aac.utilities.dependencyinjection
+package co.windly.aac.utilities.di
 
 import android.app.Application
 import android.arch.persistence.room.Room

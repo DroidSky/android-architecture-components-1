@@ -3,10 +3,10 @@ package co.windly.aac.presentation.base
 import android.support.annotation.IdRes
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
-import android.support.v7.app.AppCompatActivity
 import co.windly.aac.R
+import dagger.android.support.DaggerAppCompatActivity
 
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity : DaggerAppCompatActivity() {
 
   companion object {
 
