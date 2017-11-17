@@ -5,9 +5,7 @@ import dagger.Subcomponent
 import dagger.android.AndroidInjector
 
 @FragmentScoped
-@Subcomponent(modules = arrayOf(
-  AuthorsListModule::class
-))
+@Subcomponent
 interface AuthorsListComponent : AndroidInjector<AuthorsListFragment> {
 
   @Subcomponent.Builder
