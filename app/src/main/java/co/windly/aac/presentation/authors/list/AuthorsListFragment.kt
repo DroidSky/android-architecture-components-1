@@ -13,6 +13,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_list.*
+import org.apache.commons.lang3.StringUtils
+import java.util.*
 import javax.inject.Inject
 
 class AuthorsListFragment : BaseListFragment() {
@@ -33,6 +35,17 @@ class AuthorsListFragment : BaseListFragment() {
     this.swipeRefresh.setOnRefreshListener { this.loadAuthors() }
     this.swipeRefresh.isRefreshing = true
     this.loadAuthors()
+  }
+
+  override fun onSortButtonClicked() {
+    Collections.sort(this.adapter.adapterItems, { first, second ->
+      run {
+        val firstAuthor = (first as AuthorListItem).let { "${it.author.firstName} ${it.author.lastName}" }
+        val secondAuthor = (second as AuthorListItem).let { "${it.author.firstName} ${it.author.lastName}" }
+        StringUtils.compare(firstAuthor, secondAuthor)
+      }
+    })
+    this.adapter.fastAdapter.notifyAdapterDataSetChanged()
   }
 
   private fun loadAuthors() {

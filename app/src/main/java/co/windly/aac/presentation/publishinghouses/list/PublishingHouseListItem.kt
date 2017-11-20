@@ -7,7 +7,7 @@ import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.items.AbstractItem
 import kotlinx.android.synthetic.main.item_publishing_houses_list.view.*
 
-class PublishingHouseListItem(private val house: PublishingHouse)
+class PublishingHouseListItem(val house: PublishingHouse)
   : AbstractItem<PublishingHouseListItem, PublishingHouseListItem.ViewHolder>() {
 
   override fun getLayoutRes(): Int = R.layout.item_publishing_houses_list

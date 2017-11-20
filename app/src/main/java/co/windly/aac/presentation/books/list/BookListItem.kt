@@ -7,7 +7,7 @@ import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.items.AbstractItem
 import kotlinx.android.synthetic.main.item_books_list.view.*
 
-class BookListItem(private val book: Book) : AbstractItem<BookListItem, BookListItem.ViewHolder>() {
+class BookListItem(val book: Book) : AbstractItem<BookListItem, BookListItem.ViewHolder>() {
 
   override fun getLayoutRes(): Int = R.layout.item_books_list
 

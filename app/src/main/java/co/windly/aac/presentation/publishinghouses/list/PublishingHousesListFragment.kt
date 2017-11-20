@@ -13,6 +13,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_list.*
+import org.apache.commons.lang3.StringUtils
+import java.util.*
 import javax.inject.Inject
 
 class PublishingHousesListFragment : BaseListFragment() {
@@ -33,6 +35,17 @@ class PublishingHousesListFragment : BaseListFragment() {
     this.swipeRefresh.setOnRefreshListener { this.loadPublishingHouses() }
     this.swipeRefresh.isRefreshing = true
     this.loadPublishingHouses()
+  }
+
+  override fun onSortButtonClicked() {
+    Collections.sort(this.adapter.adapterItems, { first, second ->
+      run {
+        val firstName = (first as PublishingHouseListItem).house.name
+        val secondName = (second as PublishingHouseListItem).house.name
+        StringUtils.compare(firstName, secondName)
+      }
+    })
+    this.adapter.fastAdapter.notifyAdapterDataSetChanged()
   }
 
   private fun loadPublishingHouses() {

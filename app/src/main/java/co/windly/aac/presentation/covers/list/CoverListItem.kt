@@ -7,7 +7,7 @@ import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.items.AbstractItem
 import kotlinx.android.synthetic.main.item_covers_list.view.*
 
-class CoverListItem(private val cover: Cover) : AbstractItem<CoverListItem, CoverListItem.ViewHolder>() {
+class CoverListItem(val cover: Cover) : AbstractItem<CoverListItem, CoverListItem.ViewHolder>() {
 
   override fun getLayoutRes(): Int = R.layout.item_covers_list
 

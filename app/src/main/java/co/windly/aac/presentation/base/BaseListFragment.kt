@@ -2,18 +2,23 @@ package co.windly.aac.presentation.base
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import co.windly.aac.R
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.IItem
 import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.mikepenz.fastadapter.items.AbstractItem
 import kotlinx.android.synthetic.main.fragment_list.*
 
+
 abstract class BaseListFragment : BaseFragment() {
 
-  private var adapter: ItemAdapter<AbstractItem<*, *>> = ItemAdapter()
+  protected var adapter: ItemAdapter<AbstractItem<*, *>> = ItemAdapter()
+
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    this.setHasOptionsMenu(true)
+  }
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
     return super.onCreateView(inflater, container, savedInstanceState).also {
@@ -27,23 +32,39 @@ abstract class BaseListFragment : BaseFragment() {
     this.recyclerView.layoutManager = LinearLayoutManager(this.context)
   }
 
-  fun addItem(item: AbstractItem<*, *>) {
+  override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+    inflater?.inflate(R.menu.list_menu, menu)
+    super.onCreateOptionsMenu(menu, inflater)
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    if (item?.itemId == R.id.sortItems) {
+      this.onSortButtonClicked()
+    }
+    return super.onOptionsItemSelected(item)
+  }
+
+  open fun addItem(item: AbstractItem<*, *>) {
     this.adapter.add(item)
   }
 
-  fun addItems(items: List<AbstractItem<*, *>>) {
+  open fun addItems(items: List<AbstractItem<*, *>>) {
     this.adapter.add(items)
   }
 
-  fun setItems(items: List<AbstractItem<*, *>>) {
+  open fun setItems(items: List<AbstractItem<*, *>>) {
     this.adapter.setNewList(items)
   }
 
-  fun clearItems() {
+  open fun clearItems() {
     this.adapter.clear()
   }
 
-  fun removeItem(position: Int) {
+  open fun removeItem(position: Int) {
     this.adapter.remove(position)
+  }
+
+  open fun onSortButtonClicked() {
+    // No-op.
   }
 }

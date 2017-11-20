@@ -7,7 +7,7 @@ import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.items.AbstractItem
 import kotlinx.android.synthetic.main.item_authors_list.view.*
 
-class AuthorListItem(private val author: Author) : AbstractItem<AuthorListItem, AuthorListItem.ViewHolder>() {
+class AuthorListItem(val author: Author) : AbstractItem<AuthorListItem, AuthorListItem.ViewHolder>() {
 
   override fun getLayoutRes(): Int = R.layout.item_authors_list
 

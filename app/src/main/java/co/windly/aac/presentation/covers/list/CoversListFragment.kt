@@ -13,6 +13,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_list.*
+import org.apache.commons.lang3.StringUtils
+import java.util.*
 import javax.inject.Inject
 
 class CoversListFragment : BaseListFragment() {
@@ -33,6 +35,17 @@ class CoversListFragment : BaseListFragment() {
     this.swipeRefresh.setOnRefreshListener { this.loadCovers() }
     this.swipeRefresh.isRefreshing = true
     this.loadCovers()
+  }
+
+  override fun onSortButtonClicked() {
+    Collections.sort(this.adapter.adapterItems, { first, second ->
+      run {
+        val firstName = (first as CoverListItem).cover.name
+        val secondName = (second as CoverListItem).cover.name
+        StringUtils.compare(firstName, secondName)
+      }
+    })
+    this.adapter.fastAdapter.notifyAdapterDataSetChanged()
   }
 
   private fun loadCovers() {

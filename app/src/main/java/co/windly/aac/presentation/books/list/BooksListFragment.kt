@@ -13,6 +13,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_list.*
+import org.apache.commons.lang3.StringUtils
+import java.util.*
 import javax.inject.Inject
 
 class BooksListFragment : BaseListFragment() {
@@ -33,6 +35,17 @@ class BooksListFragment : BaseListFragment() {
     this.swipeRefresh.setOnRefreshListener { this.loadBooks() }
     this.swipeRefresh.isRefreshing = true
     this.loadBooks()
+  }
+
+  override fun onSortButtonClicked() {
+    Collections.sort(this.adapter.adapterItems, { first, second ->
+      run {
+        val firstTitle = (first as BookListItem).book.title
+        val secondTitle = (second as BookListItem).book.title
+        StringUtils.compare(firstTitle, secondTitle)
+      }
+    })
+    this.adapter.fastAdapter.notifyAdapterDataSetChanged()
   }
 
   private fun loadBooks() {
