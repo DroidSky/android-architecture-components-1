@@ -3,11 +3,11 @@ package co.windly.aac.presentation.covers.list
 import android.view.View
 import co.windly.aac.R
 import co.windly.aac.data.domain.models.covers.Cover
-import com.mikepenz.fastadapter.FastAdapter
-import com.mikepenz.fastadapter.items.AbstractItem
+import co.windly.aac.presentation.base.BaseListFragment
 import kotlinx.android.synthetic.main.item_covers_list.view.*
 
-class CoverListItem(val cover: Cover) : AbstractItem<CoverListItem, CoverListItem.ViewHolder>() {
+class CoverListItem(val cover: Cover)
+  : BaseListFragment.CompatibleListItem<Cover>(cover) {
 
   override fun getLayoutRes(): Int = R.layout.item_covers_list
 
@@ -17,13 +17,13 @@ class CoverListItem(val cover: Cover) : AbstractItem<CoverListItem, CoverListIte
 
   override fun getViewHolder(view: View) = ViewHolder(view)
 
-  class ViewHolder(view: View) : FastAdapter.ViewHolder<CoverListItem>(view) {
+  class ViewHolder(view: View) : BaseListFragment.CompatibleListItem.ViewHolder<Cover>(view) {
 
-    override fun bindView(item: CoverListItem?, payloads: MutableList<Any>?) {
-      this.itemView.name.text = item?.cover?.name
+    override fun bindView(item: BaseListFragment.CompatibleListItem<Cover>?, payloads: MutableList<Any>?) {
+      this.itemView.name.text = item?.item?.name
     }
 
-    override fun unbindView(item: CoverListItem?) {
+    override fun unbindView(item: BaseListFragment.CompatibleListItem<Cover>?) {
       this.itemView.name.text = null
     }
   }

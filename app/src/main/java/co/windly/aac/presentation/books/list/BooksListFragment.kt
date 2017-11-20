@@ -9,18 +9,18 @@ import co.windly.aac.data.domain.models.books.Book
 import co.windly.aac.data.network.managers.books.BooksNetworkManager
 import co.windly.aac.presentation.base.BaseListFragment
 import dagger.android.support.AndroidSupportInjection
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.rxkotlin.plusAssign
-import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.fragment_list.*
+import io.reactivex.Observable
 import org.apache.commons.lang3.StringUtils
 import java.util.*
 import javax.inject.Inject
 
-class BooksListFragment : BaseListFragment() {
+class BooksListFragment : BaseListFragment<Book>() {
 
   @Inject
   lateinit var networkManager: BooksNetworkManager
+
+  override val loadItemsObservable: Observable<List<Book>>
+    get() = this.networkManager.getBooks()
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
     inflater.inflate(R.layout.fragment_list, container, false)
@@ -30,12 +30,7 @@ class BooksListFragment : BaseListFragment() {
     super.onCreate(savedInstanceState)
   }
 
-  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    super.onViewCreated(view, savedInstanceState)
-    this.swipeRefresh.setOnRefreshListener { this.loadBooks() }
-    this.swipeRefresh.isRefreshing = true
-    this.loadBooks()
-  }
+  override fun mapItem(item: Book): CompatibleListItem<Book> = BookListItem(item)
 
   override fun onSortButtonClicked() {
     Collections.sort(this.adapter.adapterItems, { first, second ->
@@ -46,17 +41,5 @@ class BooksListFragment : BaseListFragment() {
       }
     })
     this.adapter.fastAdapter.notifyAdapterDataSetChanged()
-  }
-
-  private fun loadBooks() {
-    this.disposables += this.networkManager.getBooks()
-      .doOnComplete { this.swipeRefresh.isRefreshing = false }
-      .subscribeOn(Schedulers.io())
-      .observeOn(AndroidSchedulers.mainThread())
-      .subscribe { this.handleBooks(it) }
-  }
-
-  private fun handleBooks(books: List<Book>) {
-    this.setItems(books.map { BookListItem(it) })
   }
 }
