@@ -23,21 +23,21 @@ class MainActivity : BaseActivity() {
     when (item.itemId) {
       R.id.navigation_authors -> {
         this.showFragment(AuthorsListFragment())
-        return@OnNavigationItemSelectedListener true
+        true
       }
       R.id.navigation_publishing_houses -> {
-        this.showFragment(PublishingHousesListFragment())
-        return@OnNavigationItemSelectedListener true
+        this.showFragment(PublishingHousesListFragment.newInstance())
+        true
       }
       R.id.navigation_covers -> {
-        this.showFragment(CoversListFragment())
-        return@OnNavigationItemSelectedListener true
+        this.showFragment(CoversListFragment.newInstance())
+        true
       }
       R.id.navigation_books -> {
-        this.showFragment(BooksListFragment())
-        return@OnNavigationItemSelectedListener true
+        this.showFragment(BooksListFragment.newInstance())
+        true
       }
+      else -> false
     }
-    false
   }
 }

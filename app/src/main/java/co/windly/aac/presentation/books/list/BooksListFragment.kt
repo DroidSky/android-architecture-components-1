@@ -16,6 +16,11 @@ import javax.inject.Inject
 
 class BooksListFragment : BaseListFragment<Book>() {
 
+  companion object {
+
+    fun newInstance() = BooksListFragment()
+  }
+
   @Inject
   lateinit var networkManager: BooksNetworkManager
 

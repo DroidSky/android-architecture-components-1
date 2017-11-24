@@ -16,6 +16,11 @@ import javax.inject.Inject
 
 class CoversListFragment : BaseListFragment<Cover>() {
 
+  companion object {
+
+    fun newInstance() = CoversListFragment()
+  }
+
   @Inject
   lateinit var networkManager: CoversNetworkManager
 
