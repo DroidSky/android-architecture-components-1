@@ -14,7 +14,7 @@ import org.apache.commons.lang3.StringUtils
 import java.util.*
 import javax.inject.Inject
 
-class CoversListFragment : BaseListFragment<Cover>() {
+class CoversListFragment : BaseListFragment<Cover>(), CoverListItem.Handler {
 
   companion object {
 
@@ -35,16 +35,20 @@ class CoversListFragment : BaseListFragment<Cover>() {
     super.onCreate(savedInstanceState)
   }
 
-  override fun mapItem(item: Cover): CompatibleListItem<Cover> = CoverListItem(item)
+  override fun mapItem(item: Cover): CompatibleListItem<Cover> = CoverListItem(item, this)
+
+  override fun onDeleteClicked(identifier: Long) {
+    this.deleteItem(this.networkManager.deleteCover(identifier), identifier)
+  }
 
   override fun onSortButtonClicked() {
-    Collections.sort(this.adapter.adapterItems, { first, second ->
+    Collections.sort(this.itemAdapter.adapterItems, { first, second ->
       run {
         val firstName = (first as CoverListItem).cover.name
         val secondName = (second as CoverListItem).cover.name
         StringUtils.compare(firstName, secondName)
       }
     })
-    this.adapter.fastAdapter.notifyAdapterDataSetChanged()
+    this.itemAdapter.fastAdapter.notifyAdapterDataSetChanged()
   }
 }

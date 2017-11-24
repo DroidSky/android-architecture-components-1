@@ -14,7 +14,7 @@ import org.apache.commons.lang3.StringUtils
 import java.util.*
 import javax.inject.Inject
 
-class BooksListFragment : BaseListFragment<Book>() {
+class BooksListFragment : BaseListFragment<Book>(), BookListItem.Handler {
 
   companion object {
 
@@ -35,16 +35,20 @@ class BooksListFragment : BaseListFragment<Book>() {
     super.onCreate(savedInstanceState)
   }
 
-  override fun mapItem(item: Book): CompatibleListItem<Book> = BookListItem(item)
+  override fun mapItem(item: Book): CompatibleListItem<Book> = BookListItem(item, this)
+
+  override fun onDeleteClicked(identifier: Long) {
+    this.deleteItem(this.networkManager.deleteBook(identifier), identifier)
+  }
 
   override fun onSortButtonClicked() {
-    Collections.sort(this.adapter.adapterItems, { first, second ->
+    Collections.sort(this.itemAdapter.adapterItems, { first, second ->
       run {
         val firstTitle = (first as BookListItem).book.title
         val secondTitle = (second as BookListItem).book.title
         StringUtils.compare(firstTitle, secondTitle)
       }
     })
-    this.adapter.fastAdapter.notifyAdapterDataSetChanged()
+    this.itemAdapter.fastAdapter.notifyAdapterDataSetChanged()
   }
 }

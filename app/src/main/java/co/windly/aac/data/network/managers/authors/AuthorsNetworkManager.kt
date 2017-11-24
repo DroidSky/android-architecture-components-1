@@ -19,4 +19,7 @@ class AuthorsNetworkManager @Inject constructor() {
       .toList()
       .toObservable()
   }
+
+  fun deleteAuthor(authorId: Long): Observable<Boolean> =
+    this.service.deleteAuthor(authorId).map { it.isSuccessful }
 }

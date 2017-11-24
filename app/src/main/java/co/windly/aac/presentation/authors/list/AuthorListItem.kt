@@ -6,7 +6,7 @@ import co.windly.aac.data.domain.models.authors.Author
 import co.windly.aac.presentation.base.BaseListFragment
 import kotlinx.android.synthetic.main.item_authors_list.view.*
 
-class AuthorListItem(val author: Author)
+class AuthorListItem(val author: Author, val handler: Handler)
   : BaseListFragment.CompatibleListItem<Author>(author) {
 
   override fun getLayoutRes(): Int = R.layout.item_authors_list
@@ -15,18 +15,24 @@ class AuthorListItem(val author: Author)
 
   override fun getIdentifier(): Long = this.author.id
 
-  override fun getViewHolder(view: View) = ViewHolder(view)
+  override fun getViewHolder(view: View) = ViewHolder(view, this.handler)
 
-  class ViewHolder(view: View) : BaseListFragment.CompatibleListItem.ViewHolder<Author>(view) {
+  class ViewHolder(var view: View, var handler: Handler) : BaseListFragment.CompatibleListItem.ViewHolder<Author>(view) {
 
     override fun bindView(item: BaseListFragment.CompatibleListItem<Author>?, payloads: MutableList<Any>?) {
       this.itemView.firstName.text = item?.item?.firstName
       this.itemView.lastName.text = item?.item?.lastName
+      this.itemView.deleteAuthor.setOnClickListener { this.handler.onDeleteClicked(requireNotNull(item).identifier) }
     }
 
     override fun unbindView(item: BaseListFragment.CompatibleListItem<Author>?) {
       this.itemView.firstName.text = null
       this.itemView.lastName.text = null
     }
+  }
+
+  interface Handler {
+
+    fun onDeleteClicked(identifier: Long)
   }
 }

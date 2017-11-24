@@ -19,4 +19,7 @@ class CoversNetworkManager @Inject constructor() {
       .toList()
       .toObservable()
   }
+
+  fun deleteCover(coverId: Long): Observable<Boolean> =
+    this.service.deleteCover(coverId).map { it.isSuccessful }
 }

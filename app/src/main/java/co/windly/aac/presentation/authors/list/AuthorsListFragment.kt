@@ -14,7 +14,7 @@ import org.apache.commons.lang3.StringUtils
 import java.util.*
 import javax.inject.Inject
 
-class AuthorsListFragment : BaseListFragment<Author>() {
+class AuthorsListFragment : BaseListFragment<Author>(), AuthorListItem.Handler {
 
   @Inject
   lateinit var networkManager: AuthorsNetworkManager
@@ -30,16 +30,20 @@ class AuthorsListFragment : BaseListFragment<Author>() {
     super.onCreate(savedInstanceState)
   }
 
-  override fun mapItem(item: Author): CompatibleListItem<Author> = AuthorListItem(item)
+  override fun mapItem(item: Author): CompatibleListItem<Author> = AuthorListItem(item, this)
+
+  override fun onDeleteClicked(identifier: Long) {
+    this.deleteItem(this.networkManager.deleteAuthor(identifier), identifier)
+  }
 
   override fun onSortButtonClicked() {
-    Collections.sort(this.adapter.adapterItems, { first, second ->
+    Collections.sort(this.itemAdapter.adapterItems, { first, second ->
       run {
         val firstAuthor = (first as AuthorListItem).let { "${it.author.firstName} ${it.author.lastName}" }
         val secondAuthor = (second as AuthorListItem).let { "${it.author.firstName} ${it.author.lastName}" }
         StringUtils.compare(firstAuthor, secondAuthor)
       }
     })
-    this.adapter.fastAdapter.notifyAdapterDataSetChanged()
+    this.itemAdapter.fastAdapter.notifyAdapterDataSetChanged()
   }
 }

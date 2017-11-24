@@ -19,4 +19,7 @@ class BooksNetworkManager @Inject constructor() {
       .toList()
       .toObservable()
   }
+
+  fun deleteBook(bookId: Long): Observable<Boolean> =
+    this.service.deleteBook(bookId).map { it.isSuccessful }
 }

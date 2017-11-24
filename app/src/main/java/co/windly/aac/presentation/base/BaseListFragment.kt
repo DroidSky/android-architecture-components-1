@@ -1,6 +1,7 @@
 package co.windly.aac.presentation.base
 
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
 import android.view.*
 import co.windly.aac.R
@@ -17,7 +18,8 @@ import kotlinx.android.synthetic.main.fragment_list.*
 
 abstract class BaseListFragment<Item> : BaseFragment() {
 
-  protected var adapter: ItemAdapter<AbstractItem<*, *>> = ItemAdapter()
+  protected var itemAdapter: ItemAdapter<AbstractItem<*, *>> = ItemAdapter()
+  protected var fastAdapter = FastAdapter.with<IItem<*, *>, ItemAdapter<*>>(itemAdapter)
 
   protected abstract val loadItemsObservable: Observable<List<Item>>
 
@@ -34,7 +36,7 @@ abstract class BaseListFragment<Item> : BaseFragment() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    this.recyclerView.adapter = FastAdapter.with<IItem<*, *>, ItemAdapter<*>>(adapter)
+    this.recyclerView.adapter = this.fastAdapter
     this.recyclerView.layoutManager = LinearLayoutManager(this.context)
     this.swipeRefresh.setOnRefreshListener { this.onRefresh() }
     this.swipeRefresh.isRefreshing = true
@@ -58,12 +60,21 @@ abstract class BaseListFragment<Item> : BaseFragment() {
   }
 
   open fun loadItems() {
-    // No-op.
     this.disposables += this.loadItemsObservable
       .doOnComplete { this.swipeRefresh.isRefreshing = false }
       .subscribeOn(Schedulers.io())
       .observeOn(AndroidSchedulers.mainThread())
       .subscribe { this.handleLoadedItems(it) }
+  }
+
+  open fun deleteItem(deleteObservable: Observable<Boolean>, identifier: Long) {
+    this.disposables += deleteObservable
+      .subscribeOn(Schedulers.io())
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(
+        { if (it) this.removeItem(identifier) },
+        { Snackbar.make(this.recyclerView, "Cannot delete item.", Snackbar.LENGTH_SHORT).show() }
+      )
   }
 
   open fun handleLoadedItems(items: List<Item>) {
@@ -73,29 +84,29 @@ abstract class BaseListFragment<Item> : BaseFragment() {
   abstract fun mapItem(item: Item): CompatibleListItem<Item>
 
   open fun addItem(item: AbstractItem<*, *>) {
-    this.adapter.add(item)
+    this.itemAdapter.add(item)
   }
 
   open fun addItems(items: List<AbstractItem<*, *>>) {
-    this.adapter.add(items)
+    this.itemAdapter.add(items)
   }
 
   open fun setItems(items: List<AbstractItem<*, *>>) {
-    this.adapter.setNewList(items)
+    this.itemAdapter.setNewList(items)
   }
 
   open fun clearItems() {
-    this.adapter.clear()
+    this.itemAdapter.clear()
   }
 
-  open fun removeItem(position: Int) {
-    this.adapter.remove(position)
+  open fun removeItem(identifier: Long) {
+    val position = this.itemAdapter.getAdapterPosition(identifier)
+    this.itemAdapter.remove(position)
   }
 
   open fun onSortButtonClicked() {
     // No-op.
   }
-
 
   abstract class CompatibleListItem<out Item>(val item: Item) : AbstractItem<CompatibleListItem<*>, CompatibleListItem.ViewHolder<*>>() {
 
