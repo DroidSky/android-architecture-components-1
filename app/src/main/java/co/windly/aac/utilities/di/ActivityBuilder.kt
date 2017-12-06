@@ -1,8 +1,8 @@
 package co.windly.aac.utilities.di
 
 import android.app.Activity
-import co.windly.aac.presentation.MainActivity
-import co.windly.aac.presentation.MainActivityComponent
+import co.windly.aac.ui.MainActivity
+import co.windly.aac.ui.MainActivityComponent
 import dagger.Binds
 import dagger.Module
 import dagger.android.ActivityKey

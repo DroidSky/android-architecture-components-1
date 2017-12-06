@@ -1,6 +1,7 @@
 package co.windly.aac.utilities.di
 
-import co.windly.aac.presentation.MainActivityComponent
+import co.windly.aac.ui.MainActivityComponent
+import co.windly.aac.utilities.rx.AacSchedulerProvider
 import dagger.Module
 import dagger.Provides
 import org.modelmapper.ModelMapper
@@ -24,4 +25,7 @@ class ApplicationModule {
       this.configuration.isAmbiguityIgnored = true
     }
   }
+
+  @Provides
+  fun provideSchedulerProvider() = AacSchedulerProvider()
 }
