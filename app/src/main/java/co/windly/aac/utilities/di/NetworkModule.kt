@@ -67,7 +67,8 @@ class NetworkModule {
   @Provides
   @Singleton
   @Named("raw")
-  fun provideRawOkHttpClientBuilder(): OkHttpClient.Builder = OkHttpClient.Builder()
+  fun provideRawOkHttpClientBuilder(): OkHttpClient.Builder
+    = OkHttpClient.Builder()
     .connectTimeout(15, TimeUnit.SECONDS)
     .readTimeout(20, TimeUnit.SECONDS)
     .writeTimeout(20, TimeUnit.SECONDS)
@@ -79,12 +80,14 @@ class NetworkModule {
   @Provides
   @Singleton
   @Named("content-type")
-  fun provideHeaderContentTypeInterceptor(): Interceptor = HeaderContentTypeInterceptor(APPLICATION_JSON)
+  fun provideHeaderContentTypeInterceptor(): Interceptor
+    = HeaderContentTypeInterceptor(APPLICATION_JSON)
 
   @Provides
   @Singleton
   @Named("accept")
-  fun provideHeaderAcceptInterceptor(): Interceptor = HeaderAcceptInterceptor(APPLICATION_JSON)
+  fun provideHeaderAcceptInterceptor(): Interceptor
+    = HeaderAcceptInterceptor(APPLICATION_JSON)
 
   //endregion
 
@@ -92,11 +95,13 @@ class NetworkModule {
 
   @Provides
   @Singleton
-  fun provideCallAdapterFactory(): CallAdapter.Factory = RxJava2CallAdapterFactory.create()
+  fun provideCallAdapterFactory(): CallAdapter.Factory
+    = RxJava2CallAdapterFactory.create()
 
   @Provides
   @Singleton
-  fun provideConverterFactory(): Converter.Factory = JacksonConverterFactory.create()
+  fun provideConverterFactory(): Converter.Factory
+    = JacksonConverterFactory.create()
 
   //endregion
 }

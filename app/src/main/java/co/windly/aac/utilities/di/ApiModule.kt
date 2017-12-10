@@ -10,7 +10,7 @@ import dagger.Provides
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
-@Module(includes = arrayOf(NetworkModule::class))
+@Module(includes = [NetworkModule::class])
 class ApiModule {
 
   companion object {

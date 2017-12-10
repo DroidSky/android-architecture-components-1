@@ -13,17 +13,17 @@ import co.windly.aac.data.database.models.publishinghouses.PublishingHouseEntity
 @Database(
   version = 1,
   exportSchema = false,
-  entities = arrayOf(
+  entities = [
     AuthorEntity::class,
     BookEntity::class,
     CoverEntity::class,
     PublishingHouseEntity::class
-  )
+  ]
 )
 @TypeConverters(
-  value = *arrayOf(
+  value = [
     DateTimeConverter::class
-  )
+  ]
 )
 abstract class AndroidDatabase : RoomDatabase() {
 

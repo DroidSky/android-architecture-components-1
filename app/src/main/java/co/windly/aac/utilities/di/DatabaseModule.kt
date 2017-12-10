@@ -20,21 +20,26 @@ class DatabaseModule {
 
   @Provides
   @Singleton
-  fun provideAuthorsDao(): AuthorsDao = this.database.authorsDao()
+  fun provideAuthorsDao(): AuthorsDao
+    = this.database.authorsDao()
 
   @Provides
   @Singleton
-  fun provideBooksDao(): BooksDao = this.database.booksDao()
+  fun provideBooksDao(): BooksDao
+    = this.database.booksDao()
 
   @Provides
   @Singleton
-  fun provideCoversDao(): CoversDao = this.database.coversDao()
+  fun provideCoversDao(): CoversDao
+    = this.database.coversDao()
 
   @Provides
   @Singleton
-  fun providePublishingHousesDao(): PublishingHousesDao = this.database.publishingHousesDao()
+  fun providePublishingHousesDao(): PublishingHousesDao
+    = this.database.publishingHousesDao()
 
   @Provides
   @Singleton
-  fun provideDatabaseDao(): AllDao = this.database.allDao()
+  fun provideDatabaseDao(): AllDao
+    = this.database.allDao()
 }

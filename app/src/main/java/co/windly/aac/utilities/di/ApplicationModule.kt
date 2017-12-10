@@ -1,21 +1,15 @@
 package co.windly.aac.utilities.di
 
-import co.windly.aac.ui.MainActivityComponent
 import co.windly.aac.utilities.rx.AacSchedulerProvider
+import co.windly.aac.utilities.rx.SchedulerProvider
 import dagger.Module
 import dagger.Provides
 import org.modelmapper.ModelMapper
 import javax.inject.Singleton
 
-@Module(
-  subcomponents = arrayOf(
-    MainActivityComponent::class
-  ),
-  includes = arrayOf(
-    ApiModule::class,
-    DatabaseModule::class
-  )
-)
+@Module(includes = [
+  ApiModule::class, DatabaseModule::class
+])
 class ApplicationModule {
 
   @Provides
@@ -27,5 +21,6 @@ class ApplicationModule {
   }
 
   @Provides
-  fun provideSchedulerProvider() = AacSchedulerProvider()
+  fun provideSchedulerProvider(): SchedulerProvider
+    = AacSchedulerProvider()
 }

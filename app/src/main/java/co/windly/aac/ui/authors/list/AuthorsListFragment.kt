@@ -16,6 +16,11 @@ import javax.inject.Inject
 
 class AuthorsListFragment : DeprecatedBaseListFragment<Author>(), AuthorListItem.Handler {
 
+  companion object {
+
+    fun newInstance() = AuthorsListFragment()
+  }
+
   @Inject
   lateinit var networkManager: AuthorsNetworkManager
 
