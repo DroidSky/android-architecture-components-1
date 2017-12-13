@@ -1,54 +1,40 @@
 package co.windly.aac.ui.authors.list
 
+import android.arch.lifecycle.Observer
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import co.windly.aac.BR
 import co.windly.aac.R
 import co.windly.aac.data.domain.models.authors.Author
-import co.windly.aac.data.network.managers.authors.AuthorsNetworkManager
-import co.windly.aac.ui.base.DeprecatedBaseListFragment
-import dagger.android.support.AndroidSupportInjection
-import io.reactivex.Observable
-import org.apache.commons.lang3.StringUtils
-import java.util.*
+import co.windly.aac.databinding.FragmentMainAuthorsListBinding
+import co.windly.aac.ui.base.BaseFragment
 import javax.inject.Inject
 
-class AuthorsListFragment : DeprecatedBaseListFragment<Author>(), AuthorListItem.Handler {
-
-  companion object {
-
-    fun newInstance() = AuthorsListFragment()
-  }
+class AuthorsListFragment : BaseFragment<FragmentMainAuthorsListBinding, AuthorsListViewModel>(), AuthorsListNavigator {
 
   @Inject
-  lateinit var networkManager: AuthorsNetworkManager
+  lateinit var authorsListViewModel: AuthorsListViewModel
 
-  override val loadItemsObservable: Observable<List<Author>>
-    get() = this.networkManager.getAuthors()
-
-  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-    inflater.inflate(R.layout.fragment_list, container, false)
+  companion object {
+    fun newInstance() = AuthorsListFragment().apply { this.arguments = Bundle() }
+  }
 
   override fun onCreate(savedInstanceState: Bundle?) {
-    AndroidSupportInjection.inject(this)
     super.onCreate(savedInstanceState)
+    this.subscribeToLiveData()
   }
 
-  override fun mapItem(item: Author): CompatibleListItem<Author> = AuthorListItem(item, this)
+  override fun getViewModel(): AuthorsListViewModel
+    = this.authorsListViewModel
 
-  override fun onDeleteClicked(identifier: Long) {
-    this.deleteItem(this.networkManager.deleteAuthor(identifier), identifier)
-  }
+  override fun getBindingVariable(): Int
+    = BR.viewModel
 
-  override fun onSortButtonClicked() {
-    Collections.sort(this.itemAdapter.adapterItems, { first, second ->
-      run {
-        val firstAuthor = (first as AuthorListItem).let { "${it.author.firstName} ${it.author.lastName}" }
-        val secondAuthor = (second as AuthorListItem).let { "${it.author.firstName} ${it.author.lastName}" }
-        StringUtils.compare(firstAuthor, secondAuthor)
-      }
+  override fun getLayoutId(): Int
+    = R.layout.fragment_main_authors_list
+
+  private fun subscribeToLiveData() {
+    authorsListViewModel.getAuthorsData().observe(this, Observer<List<Author>> { authors ->
+      authors?.let { authorsListViewModel.setAuthorsDataList(it) }
     })
-    this.itemAdapter.fastAdapter.notifyAdapterDataSetChanged()
   }
 }

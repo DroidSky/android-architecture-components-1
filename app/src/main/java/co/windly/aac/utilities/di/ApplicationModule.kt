@@ -1,5 +1,7 @@
 package co.windly.aac.utilities.di
 
+import co.windly.aac.data.AacDataManager
+import co.windly.aac.data.DataManager
 import co.windly.aac.utilities.rx.AacSchedulerProvider
 import co.windly.aac.utilities.rx.SchedulerProvider
 import dagger.Module
@@ -23,4 +25,9 @@ class ApplicationModule {
   @Provides
   fun provideSchedulerProvider(): SchedulerProvider
     = AacSchedulerProvider()
+
+  @Provides
+  @Singleton
+  fun provideDataManager(dataManager: AacDataManager): DataManager
+    = dataManager
 }
