@@ -19,22 +19,26 @@ class ApiModule {
 
   @Provides
   @Singleton
-  fun provideRetrofit(builder: Retrofit.Builder): Retrofit = builder.baseUrl(API_URL).build()
+  fun provideRetrofit(builder: Retrofit.Builder): Retrofit
+    = builder.baseUrl(API_URL).build()
 
   @Provides
   @Singleton
-  fun provideAuthorsService(retrofit: Retrofit): AuthorsService = retrofit.create(AuthorsService::class.java)
+  fun provideAuthorsService(retrofit: Retrofit): AuthorsService
+    = retrofit.create(AuthorsService::class.java)
 
   @Provides
   @Singleton
-  fun provideBooksServices(retrofit: Retrofit): BooksService = retrofit.create(BooksService::class.java)
+  fun provideBooksServices(retrofit: Retrofit): BooksService
+    = retrofit.create(BooksService::class.java)
 
   @Provides
   @Singleton
-  fun provideCoversService(retrofit: Retrofit): CoversService = retrofit.create(CoversService::class.java)
+  fun provideCoversService(retrofit: Retrofit): CoversService
+    = retrofit.create(CoversService::class.java)
 
   @Provides
   @Singleton
-  fun providePublishingHousesService(retrofit: Retrofit): PublishingHousesService =
-    retrofit.create(PublishingHousesService::class.java)
+  fun providePublishingHousesService(retrofit: Retrofit): PublishingHousesService
+    = retrofit.create(PublishingHousesService::class.java)
 }

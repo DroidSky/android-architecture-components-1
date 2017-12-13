@@ -1,19 +1,13 @@
 package co.windly.aac.ui.publishinghouses
 
-import android.support.v4.app.Fragment
-import co.windly.aac.ui.publishinghouses.list.PublishingHousesListComponent
 import co.windly.aac.ui.publishinghouses.list.PublishingHousesListFragment
-import dagger.Binds
+import co.windly.aac.ui.publishinghouses.list.PublishingHousesListModule
 import dagger.Module
-import dagger.android.AndroidInjector
-import dagger.android.support.FragmentKey
-import dagger.multibindings.IntoMap
+import dagger.android.ContributesAndroidInjector
 
 @Module
 abstract class PublishingHousesFragmentProvider {
 
-  @Binds
-  @IntoMap
-  @FragmentKey(value = PublishingHousesListFragment::class)
-  abstract fun providePublishingHousesFragmentFactory(builder: PublishingHousesListComponent.Builder): AndroidInjector.Factory<out Fragment>
+  @ContributesAndroidInjector(modules = [PublishingHousesListModule::class])
+  abstract fun providePublishingHousesListFragmentFactory(): PublishingHousesListFragment
 }

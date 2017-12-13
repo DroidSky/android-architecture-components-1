@@ -3,6 +3,7 @@ package co.windly.aac.ui.common
 import android.support.annotation.IdRes
 import android.support.v4.app.FragmentManager
 import co.windly.aac.R
+import co.windly.aac.ui.MainActivity
 import co.windly.aac.ui.authors.list.AuthorsListFragment
 import co.windly.aac.ui.books.list.BooksListFragment
 import co.windly.aac.ui.covers.list.CoversListFragment
@@ -16,8 +17,8 @@ class NavigationController {
   private val fragmentManager: FragmentManager
 
   @Inject
-  constructor(fragmentManager: FragmentManager) {
-    this.fragmentManager = fragmentManager
+  constructor(mainActivity: MainActivity) {
+    this.fragmentManager = mainActivity.supportFragmentManager
     this.containerId = R.id.fragmentContainer
   }
 
@@ -25,6 +26,7 @@ class NavigationController {
     val authorsFragment = AuthorsListFragment.newInstance()
     this.fragmentManager.beginTransaction()
       .replace(this.containerId, authorsFragment)
+      .setCustomAnimations(R.anim.fragment_enter, R.anim.fragment_leave)
       .commitAllowingStateLoss()
   }
 
@@ -32,6 +34,7 @@ class NavigationController {
     val booksFragment = BooksListFragment.newInstance()
     this.fragmentManager.beginTransaction()
       .replace(this.containerId, booksFragment)
+      .setCustomAnimations(R.anim.fragment_enter, R.anim.fragment_leave)
       .commitAllowingStateLoss()
   }
 
@@ -39,6 +42,7 @@ class NavigationController {
     val coversFragment = CoversListFragment.newInstance()
     this.fragmentManager.beginTransaction()
       .replace(this.containerId, coversFragment)
+      .setCustomAnimations(R.anim.fragment_enter, R.anim.fragment_leave)
       .commitAllowingStateLoss()
   }
 
@@ -46,6 +50,7 @@ class NavigationController {
     val housesFragment = PublishingHousesListFragment.newInstance()
     this.fragmentManager.beginTransaction()
       .replace(this.containerId, housesFragment)
+      .setCustomAnimations(R.anim.fragment_enter, R.anim.fragment_leave)
       .commitAllowingStateLoss()
   }
 }
