@@ -12,6 +12,9 @@ class AacDataManager @Inject constructor() : DataManager {
   @Inject
   lateinit var networkManager: AuthorsNetworkManager
 
-  override fun getAllAuthors(): Observable<List<Author>>
-    = this.networkManager.getAuthors()
+  override fun getAuthors(active: Boolean?): Observable<List<Author>>
+    = this.networkManager.getAuthors(active)
+
+  override fun deleteAuthor(authorId: Long): Observable<Boolean>
+    = this.networkManager.deleteAuthor(authorId)
 }

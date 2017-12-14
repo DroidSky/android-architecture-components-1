@@ -12,8 +12,8 @@ class AuthorsNetworkManager @Inject constructor() {
   @Inject lateinit var service: AuthorsService
   @Inject lateinit var mapper: ModelMapper
 
-  fun getAuthors(): Observable<List<Author>> {
-    return this.service.getAuthors()
+  fun getAuthors(active: Boolean? = null): Observable<List<Author>> {
+    return this.service.getAuthors(active)
       .flatMapIterable { it }
       .map { this.mapper.map(it, Author::class.java) }
       .toList()

@@ -25,9 +25,9 @@ abstract class BaseViewModel<N> : ViewModel {
 
   fun getCompositeDisposable() = this.compositeDisposable
 
-  fun isLoading() = this.isLoading
+  fun getIsLoading() = this.isLoading
 
-  fun setLoading(isLoading: Boolean) {
+  fun setIsLoading(isLoading: Boolean) {
     this.isLoading.set(isLoading)
   }
 

@@ -14,25 +14,40 @@ class AuthorsListViewModel(
 ) : BaseViewModel<AuthorsListNavigator>(dataManager, schedulerProvider) {
 
   private val authorsObservableArrayList = ObservableArrayList<Author>()
-  private val authorsListLiveData = MutableLiveData<List<Author>>()
+  private val authorsListLiveData = MutableLiveData<MutableList<Author>>()
 
   init {
     this.loadAuthors()
   }
 
-  private fun loadAuthors() {
-    this.setLoading(true)
-    getCompositeDisposable().add(getDataManager()
-      .getAllAuthors()
+  fun deleteAuthor(authorId: Long) {
+    getCompositeDisposable().addAll(getDataManager()
+      .deleteAuthor(authorId)
       .subscribeOn(getSchedulerProvider().io())
       .observeOn(getSchedulerProvider().ui())
       .subscribe(
-        { this.authorsListLiveData.value = it },
+        {
+          this.authorsObservableArrayList.removeAll { it.id == authorId }
+          this.authorsListLiveData.value?.removeAll { it.id == authorId }
+        },
         { AacLogger.e(it.localizedMessage) }
       ))
   }
 
-  fun getAuthorsListLiveData(): MutableLiveData<List<Author>>
+  fun loadAuthors() {
+    this.setIsLoading(true)
+    getCompositeDisposable().add(getDataManager()
+      .getAuthors(active = true)
+      .subscribeOn(getSchedulerProvider().io())
+      .observeOn(getSchedulerProvider().ui())
+      .doOnTerminate { this.setIsLoading(false) }
+      .subscribe(
+        { this.authorsListLiveData.value = mutableListOf<Author>().apply { this.addAll(it) } },
+        { AacLogger.e(it.localizedMessage) }
+      ))
+  }
+
+  fun getAuthorsListLiveData(): MutableLiveData<MutableList<Author>>
     = this.authorsListLiveData
 
   fun addAuthorItemsToList(authors: List<Author>) {

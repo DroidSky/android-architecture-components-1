@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import co.windly.aac.data.domain.models.authors.Author
+import co.windly.aac.databinding.ItemAuthorsEmptyListBinding
 import co.windly.aac.databinding.ItemAuthorsListBinding
 import co.windly.aac.ui.base.BaseViewHolder
 
@@ -15,6 +16,7 @@ class AuthorsListAdapter : RecyclerView.Adapter<BaseViewHolder> {
   }
 
   private val authorsList: MutableList<Author>
+  private lateinit var listener: AuthorsListAdapterListener
 
   constructor(authorsList: List<Author>) {
     this.authorsList = mutableListOf<Author>().apply { this.addAll(authorsList) }
@@ -25,10 +27,14 @@ class AuthorsListAdapter : RecyclerView.Adapter<BaseViewHolder> {
   }
 
   override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): BaseViewHolder {
-    when (viewType) {
+    return when (viewType) {
       VIEW_TYPE_NORMAL -> {
         val itemsAuthorsListBinding = ItemAuthorsListBinding.inflate(LayoutInflater.from(parent?.context), parent, false)
-        return AuthorViewHolder(itemsAuthorsListBinding)
+        AuthorViewHolder(itemsAuthorsListBinding)
+      }
+      VIEW_TYPE_EMPTY -> {
+        val itemsAuthorsEmptyListBinding = ItemAuthorsEmptyListBinding.inflate(LayoutInflater.from(parent?.context), parent, false)
+        EmptyAuthorViewHolder(itemsAuthorsEmptyListBinding)
       }
       else -> {
         throw IllegalArgumentException("Unknown view type.")
@@ -37,10 +43,22 @@ class AuthorsListAdapter : RecyclerView.Adapter<BaseViewHolder> {
   }
 
   override fun getItemViewType(position: Int): Int
-    = VIEW_TYPE_NORMAL
+    = if (this.authorsList.isNotEmpty()) {
+    VIEW_TYPE_NORMAL
+  } else {
+    VIEW_TYPE_EMPTY
+  }
 
   override fun getItemCount(): Int
-    = this.authorsList.size
+    = if (this.authorsList.isNotEmpty()) {
+    this.authorsList.size
+  } else {
+    1
+  }
+
+  fun setListener(listener: AuthorsListAdapterListener) {
+    this.listener = listener
+  }
 
   fun addItems(authors: List<Author>) {
     this.authorsList.addAll(authors)
@@ -68,7 +86,31 @@ class AuthorsListAdapter : RecyclerView.Adapter<BaseViewHolder> {
     }
 
     override fun onDeleteClick(authorId: Long) {
-      // TODO: Handle item removal.
+      listener.onDeleteClick(authorId)
     }
+  }
+
+  inner class EmptyAuthorViewHolder : BaseViewHolder, AuthorsListEmptyItemViewModel.AuthorsListEmptyItemViewModelListener {
+
+    private val binding: ItemAuthorsEmptyListBinding
+
+    constructor(binding: ItemAuthorsEmptyListBinding) : super(binding.root) {
+      this.binding = binding
+    }
+
+    override fun onBind(position: Int) {
+      this.binding.viewModel = AuthorsListEmptyItemViewModel(this)
+    }
+
+    override fun onRetryClick() {
+      listener.onRetryClick()
+    }
+  }
+
+  interface AuthorsListAdapterListener {
+
+    fun onDeleteClick(authorId: Long)
+
+    fun onRetryClick()
   }
 }

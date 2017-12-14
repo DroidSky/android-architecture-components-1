@@ -5,5 +5,7 @@ import io.reactivex.Observable
 
 interface DataManager {
 
-  fun getAllAuthors(): Observable<List<Author>>
+  fun getAuthors(active: Boolean? = null): Observable<List<Author>>
+
+  fun deleteAuthor(authorId: Long): Observable<Boolean>
 }
