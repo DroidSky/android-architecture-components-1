@@ -5,6 +5,7 @@ import android.databinding.ObservableArrayList
 import co.windly.aac.data.DataManager
 import co.windly.aac.data.domain.models.authors.Author
 import co.windly.aac.ui.base.BaseViewModel
+import co.windly.aac.utilities.AacLogger
 import co.windly.aac.utilities.rx.SchedulerProvider
 
 class AuthorsListViewModel(
@@ -12,29 +13,33 @@ class AuthorsListViewModel(
   schedulerProvider: SchedulerProvider
 ) : BaseViewModel<AuthorsListNavigator>(dataManager, schedulerProvider) {
 
-  private val authorsArray = ObservableArrayList<Author>()
-  private val authorsData = MutableLiveData<List<Author>>()
+  private val authorsObservableArrayList = ObservableArrayList<Author>()
+  private val authorsListLiveData = MutableLiveData<List<Author>>()
 
   init {
     this.loadAuthors()
   }
 
   private fun loadAuthors() {
+    this.setLoading(true)
     getCompositeDisposable().add(getDataManager()
       .getAllAuthors()
       .subscribeOn(getSchedulerProvider().io())
       .observeOn(getSchedulerProvider().ui())
-      .subscribe { authors -> this.authorsData.value = authors })
+      .subscribe(
+        { this.authorsListLiveData.value = it },
+        { AacLogger.e(it.localizedMessage) }
+      ))
   }
 
-  public fun getAuthorsData(): MutableLiveData<List<Author>>
-    = this.authorsData
+  fun getAuthorsListLiveData(): MutableLiveData<List<Author>>
+    = this.authorsListLiveData
 
-  fun setAuthorsDataList(authors: List<Author>) {
-    authorsArray.clear()
-    authorsArray.addAll(authors)
+  fun addAuthorItemsToList(authors: List<Author>) {
+    this.authorsObservableArrayList.clear()
+    this.authorsObservableArrayList.addAll(authors)
   }
 
-  public fun getAuthorsArray(): ObservableArrayList<Author>
-    = this.authorsArray
+  fun getAuthorsObservableArrayList(): ObservableArrayList<Author>
+    = this.authorsObservableArrayList
 }

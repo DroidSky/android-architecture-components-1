@@ -1,7 +1,5 @@
 package co.windly.aac.ui
 
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
@@ -22,13 +20,12 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), MainNav
   lateinit var navigationController: NavigationController
 
   @Inject
-  lateinit var viewModelFactory: ViewModelProvider.Factory
+  lateinit var mainViewModel: MainViewModel
 
   @Inject
   lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 
   private lateinit var activityMainBinding: ActivityMainBinding
-  private lateinit var mainViewModel: MainViewModel
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -38,10 +35,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), MainNav
     this.navigation.selectedItemId = R.id.navigation_authors
   }
 
-  override fun getViewModel(): MainViewModel {
-    this.mainViewModel = ViewModelProviders.of(this, this.viewModelFactory).get(MainViewModel::class.java)
-    return this.mainViewModel
-  }
+  override fun getViewModel(): MainViewModel
+    = this.mainViewModel
 
   override fun getBindingVariable(): Int
     = BR.viewModel

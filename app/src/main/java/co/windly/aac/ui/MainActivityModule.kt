@@ -1,7 +1,6 @@
 package co.windly.aac.ui
 
-import android.arch.lifecycle.ViewModelProvider
-import co.windly.aac.ViewModelProviderFactory
+import co.windly.aac.data.DataManager
 import co.windly.aac.utilities.rx.SchedulerProvider
 import dagger.Module
 import dagger.Provides
@@ -10,10 +9,6 @@ import dagger.Provides
 class MainActivityModule {
 
   @Provides
-  fun provideMainViewModel(schedulerProvider: SchedulerProvider): MainViewModel
-    = MainViewModel(schedulerProvider)
-
-  @Provides
-  fun mainViewModelProvider(mainViewModel: MainViewModel): ViewModelProvider.Factory
-    = ViewModelProviderFactory(mainViewModel)
+  fun provideMainViewModel(dataManager: DataManager, schedulerProvider: SchedulerProvider): MainViewModel
+    = MainViewModel(dataManager, schedulerProvider)
 }

@@ -24,7 +24,7 @@
 			android:id="@+id/recyclerView"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			app:adapter="@{viewModel.authorsArray}"
+			app:adapter="@{viewModel.authorsObservableArrayList}"
 			tools:listitem="@layout/item_authors_list" />
 
 	</android.support.v4.widget.SwipeRefreshLayout>

@@ -1,53 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.v7.widget.CardView
+<layout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
-	xmlns:tools="http://schemas.android.com/tools"
-	android:layout_width="match_parent"
-	android:layout_height="wrap_content"
-	app:cardUseCompatPadding="true">
+	xmlns:tools="http://schemas.android.com/tools">
 
-	<android.support.constraint.ConstraintLayout
+	<data>
+
+		<variable
+			name="viewModel"
+			type="co.windly.aac.ui.authors.list.AuthorsListItemViewModel" />
+	</data>
+
+	<android.support.v7.widget.CardView
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:padding="16dp">
+		app:cardUseCompatPadding="true">
 
-		<TextView
-			android:id="@+id/firstName"
-			android:layout_width="wrap_content"
+		<android.support.constraint.ConstraintLayout
+			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			app:layout_constraintBottom_toBottomOf="parent"
-			app:layout_constraintEnd_toStartOf="@+id/lastName"
-			app:layout_constraintHorizontal_bias="0"
-			app:layout_constraintHorizontal_chainStyle="packed"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent"
-			tools:text="George R. R." />
+			android:padding="16dp">
 
-		<TextView
-			android:id="@+id/lastName"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginStart="4dp"
-			app:layout_constraintBottom_toBottomOf="parent"
-			app:layout_constraintEnd_toStartOf="@+id/deleteAuthor"
-			app:layout_constraintStart_toEndOf="@+id/firstName"
-			app:layout_constraintTop_toTopOf="parent"
-			tools:text="Martin" />
+			<TextView
+				android:id="@+id/firstName"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@{viewModel.firstName}"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintEnd_toStartOf="@+id/lastName"
+				app:layout_constraintHorizontal_bias="0"
+				app:layout_constraintHorizontal_chainStyle="packed"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent"
+				tools:text="George R. R." />
 
-		<ImageButton
-			android:id="@+id/deleteAuthor"
-			style="@style/Widget.AppCompat.ActionButton"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:contentDescription="@null"
-			app:layout_constraintBottom_toBottomOf="parent"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintTop_toBottomOf="parent"
-			app:layout_constraintTop_toTopOf="parent"
-			app:srcCompat="@drawable/ic_clear_black_24dp" />
+			<TextView
+				android:id="@+id/lastName"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="4dp"
+				android:text="@{viewModel.lastName}"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintEnd_toStartOf="@+id/deleteAuthor"
+				app:layout_constraintStart_toEndOf="@+id/firstName"
+				app:layout_constraintTop_toTopOf="parent"
+				tools:text="Martin" />
 
-	</android.support.constraint.ConstraintLayout>
+			<ImageButton
+				android:id="@+id/deleteAuthor"
+				style="@style/Widget.AppCompat.ActionButton"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:contentDescription="@null"
+				android:onClick="@{() -> viewModel.onDeleteClick()}"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintTop_toBottomOf="parent"
+				app:layout_constraintTop_toTopOf="parent"
+				app:srcCompat="@drawable/ic_clear_black_24dp" />
 
-</android.support.v7.widget.CardView>
+		</android.support.constraint.ConstraintLayout>
+
+	</android.support.v7.widget.CardView>
+
+</layout>
