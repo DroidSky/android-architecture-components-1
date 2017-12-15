@@ -42,7 +42,7 @@ class AuthorsListViewModel(
       .observeOn(getSchedulerProvider().ui())
       .doOnTerminate { this.setIsLoading(false) }
       .subscribe(
-        { this.authorsListLiveData.value = mutableListOf<Author>().apply { this.addAll(it) } },
+        { this.authorsListLiveData.value = mutableListOf(*it.toTypedArray()) },
         { AacLogger.e(it.localizedMessage) }
       ))
   }
