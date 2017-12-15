@@ -18,6 +18,6 @@ class CoversListModule {
     = CoversListAdapter(mutableListOf())
 
   @Provides
-  fun provideLinearLayourManager(fragment: CoversListFragment)
+  fun provideLinearLayoutManager(fragment: CoversListFragment)
     = LinearLayoutManager(fragment.activity)
 }

@@ -7,7 +7,7 @@ import co.windly.aac.ui.MainActivity
 import co.windly.aac.ui.authors.list.AuthorsListFragment
 import co.windly.aac.ui.books.list.BooksListFragment
 import co.windly.aac.ui.covers.list.CoversListFragment
-import co.windly.aac.ui.publishinghouses.list.DeprecatedPublishingHousesListFragment
+import co.windly.aac.ui.publishinghouses.list.PublishingHousesListFragment
 import javax.inject.Inject
 
 class NavigationController {
@@ -47,7 +47,7 @@ class NavigationController {
   }
 
   fun navigateToPublishingHousesList() {
-    val housesFragment = DeprecatedPublishingHousesListFragment.newInstance()
+    val housesFragment = PublishingHousesListFragment.newInstance()
     this.fragmentManager.beginTransaction()
       .replace(this.containerId, housesFragment)
       .setCustomAnimations(R.anim.fragment_enter, R.anim.fragment_leave)

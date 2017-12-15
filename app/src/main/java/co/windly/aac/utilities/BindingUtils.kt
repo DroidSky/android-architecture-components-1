@@ -6,9 +6,11 @@ import android.view.View
 import co.windly.aac.data.domain.models.authors.Author
 import co.windly.aac.data.domain.models.books.Book
 import co.windly.aac.data.domain.models.covers.Cover
+import co.windly.aac.data.domain.models.publishinghouses.PublishingHouse
 import co.windly.aac.ui.authors.list.AuthorsListAdapter
 import co.windly.aac.ui.books.list.BooksListAdapter
 import co.windly.aac.ui.covers.list.CoversListAdapter
+import co.windly.aac.ui.publishinghouses.list.PublishingHousesListAdapter
 
 class BindingUtils private constructor() {
 
@@ -41,6 +43,16 @@ class BindingUtils private constructor() {
         val adapter = it as CoversListAdapter
         adapter.clearItems()
         adapter.addItems(covers)
+      }
+    }
+
+    @JvmStatic
+    @BindingAdapter("adapter")
+    fun addPublishingHousesListItems(recyclerView: RecyclerView, publishingHouses: ArrayList<PublishingHouse>) {
+      recyclerView.adapter?.let {
+        val adapter = it as PublishingHousesListAdapter
+        adapter.clearItems()
+        adapter.addItems(publishingHouses)
       }
     }
 

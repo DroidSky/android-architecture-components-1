@@ -9,22 +9,21 @@
 
 		<variable
 			name="viewModel"
-			type="co.windly.aac.ui.covers.list.CoversListViewModel" />
+			type="co.windly.aac.ui.publishinghouses.list.PublishingHousesListViewModel" />
 	</data>
 
 
 	<android.support.v4.widget.SwipeRefreshLayout
 		android:id="@+id/swipeRefresh"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		app:refreshing="@{viewModel.isLoading}">
+		android:layout_height="match_parent">
 
 		<android.support.v7.widget.RecyclerView
 			android:id="@+id/recyclerView"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			app:adapter="@{viewModel.coversObservableArrayList}"
-			tools:listitem="@layout/item_covers_list" />
+			app:adapter="@{viewModel.publishingHousesObservableArrayList}"
+			tools:listitem="@layout/item_publishing_houses_list" />
 
 	</android.support.v4.widget.SwipeRefreshLayout>
 

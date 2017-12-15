@@ -1,6 +1,6 @@
 package co.windly.aac.ui.publishinghouses
 
-import co.windly.aac.ui.publishinghouses.list.DeprecatedPublishingHousesListFragment
+import co.windly.aac.ui.publishinghouses.list.PublishingHousesListFragment
 import co.windly.aac.ui.publishinghouses.list.PublishingHousesListModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -9,5 +9,5 @@ import dagger.android.ContributesAndroidInjector
 abstract class PublishingHousesFragmentProvider {
 
   @ContributesAndroidInjector(modules = [PublishingHousesListModule::class])
-  abstract fun providePublishingHousesListFragmentFactory(): DeprecatedPublishingHousesListFragment
+  abstract fun providePublishingHousesListFragmentFactory(): PublishingHousesListFragment
 }
