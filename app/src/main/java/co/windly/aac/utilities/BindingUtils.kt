@@ -2,6 +2,7 @@ package co.windly.aac.utilities
 
 import android.databinding.BindingAdapter
 import android.support.v7.widget.RecyclerView
+import android.view.View
 import co.windly.aac.data.domain.models.authors.Author
 import co.windly.aac.ui.authors.list.AuthorsListAdapter
 
@@ -17,6 +18,12 @@ class BindingUtils private constructor() {
         adapter.clearItems()
         adapter.addItems(authors)
       }
+    }
+
+    @JvmStatic
+    @BindingAdapter("android:visibility")
+    fun setVisibility(view: View, visible: Boolean) {
+      view.visibility = if (visible) View.VISIBLE else View.INVISIBLE
     }
   }
 }
