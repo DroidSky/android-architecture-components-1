@@ -8,7 +8,7 @@ class EmptyItemViewModel {
     this.listener = listener
   }
 
-  public fun onRetryClick() {
+  fun onRetryClick() {
     this.listener.onRetryClick()
   }
 

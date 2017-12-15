@@ -32,7 +32,7 @@
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toTopOf="parent"
 				app:layout_constraintVertical_chainStyle="packed"
-				app:srcCompat="@drawable/ic_rabbit" />
+				app:srcCompat="@drawable/avd_rabbit" />
 
 			<TextView
 				android:id="@+id/message"

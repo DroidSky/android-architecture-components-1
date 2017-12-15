@@ -1,5 +1,6 @@
 package co.windly.aac.ui.empty
 
+import android.graphics.drawable.Animatable
 import co.windly.aac.databinding.ItemEmptyListBinding
 import co.windly.aac.ui.base.BaseViewHolder
 
@@ -18,6 +19,9 @@ class EmptyItemViewHolder : BaseViewHolder, EmptyItemViewModel.EmptyItemViewMode
 
   override fun onBind(position: Int) {
     this.binding.viewModel = EmptyItemViewModel(this)
+    if (this.binding.image.drawable is Animatable) {
+      (this.binding.image.drawable as Animatable).start()
+    }
   }
 
   override fun onRetryClick() {
