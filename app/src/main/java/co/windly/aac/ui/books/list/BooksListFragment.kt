@@ -1,54 +1,76 @@
 package co.windly.aac.ui.books.list
 
+import android.arch.lifecycle.Observer
 import android.os.Bundle
-import android.view.LayoutInflater
+import android.support.v7.widget.DefaultItemAnimator
+import android.support.v7.widget.LinearLayoutManager
 import android.view.View
-import android.view.ViewGroup
+import co.windly.aac.BR
 import co.windly.aac.R
 import co.windly.aac.data.domain.models.books.Book
-import co.windly.aac.data.network.managers.books.BooksNetworkManager
-import co.windly.aac.ui.base.DeprecatedBaseListFragment
-import dagger.android.support.AndroidSupportInjection
-import io.reactivex.Observable
-import org.apache.commons.lang3.StringUtils
-import java.util.*
+import co.windly.aac.databinding.FragmentMainBooksListBinding
+import co.windly.aac.ui.base.BaseFragment
+import kotlinx.android.synthetic.main.fragment_main_authors_list.*
 import javax.inject.Inject
 
-class BooksListFragment : DeprecatedBaseListFragment<Book>(), BookListItem.Handler {
-
-  companion object {
-
-    fun newInstance() = BooksListFragment()
-  }
+class BooksListFragment : BaseFragment<FragmentMainBooksListBinding, BooksListViewModel>(), BooksListNavigator,
+  BooksListAdapter.BooksListAdapterListener {
 
   @Inject
-  lateinit var networkManager: BooksNetworkManager
+  lateinit var booksListAdapter: BooksListAdapter
 
-  override val loadItemsObservable: Observable<List<Book>>
-    get() = this.networkManager.getBooks()
+  @Inject
+  lateinit var layoutManager: LinearLayoutManager
 
-  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-    inflater.inflate(R.layout.fragment_list, container, false)
+  private lateinit var fragmentMainBooksListBinding: FragmentMainBooksListBinding
+
+  @Inject
+  lateinit var booksListViewModel: BooksListViewModel
+
+  companion object {
+    fun newInstance() = BooksListFragment().apply { this.arguments = Bundle() }
+  }
 
   override fun onCreate(savedInstanceState: Bundle?) {
-    AndroidSupportInjection.inject(this)
     super.onCreate(savedInstanceState)
+    this.booksListAdapter.setListener(this)
   }
 
-  override fun mapItem(item: Book): CompatibleListItem<Book> = BookListItem(item, this)
-
-  override fun onDeleteClicked(identifier: Long) {
-    this.deleteItem(this.networkManager.deleteBook(identifier), identifier)
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    this.fragmentMainBooksListBinding = this.getViewDataBinding()
+    this.setUp()
+    this.subscribeToLiveData()
   }
 
-  override fun onSortButtonClicked() {
-    Collections.sort(this.itemAdapter.adapterItems, { first, second ->
-      run {
-        val firstTitle = (first as BookListItem).book.title
-        val secondTitle = (second as BookListItem).book.title
-        StringUtils.compare(firstTitle, secondTitle)
-      }
+  override fun getViewModel(): BooksListViewModel
+    = this.booksListViewModel
+
+  override fun getBindingVariable(): Int
+    = BR.viewModel
+
+  override fun getLayoutId(): Int
+    = R.layout.fragment_main_books_list
+
+  override fun onDeleteClick(bookId: Long) {
+    this.booksListViewModel.deleteBook(bookId)
+  }
+
+  override fun onRetryClick() {
+    this.booksListViewModel.loadBooks()
+  }
+
+  private fun setUp() {
+    this.layoutManager.orientation = LinearLayoutManager.VERTICAL
+    this.fragmentMainBooksListBinding.recyclerView.layoutManager = this.layoutManager
+    this.fragmentMainBooksListBinding.recyclerView.itemAnimator = DefaultItemAnimator()
+    this.fragmentMainBooksListBinding.recyclerView.adapter = this.booksListAdapter
+    this.swipeRefresh.setOnRefreshListener { this.booksListViewModel.loadBooks() }
+  }
+
+  private fun subscribeToLiveData() {
+    booksListViewModel.getBooksListLiveData().observe(this, Observer<MutableList<Book>> { books ->
+      books?.let { booksListViewModel.addBookItemsToList(it) }
     })
-    this.itemAdapter.fastAdapter.notifyAdapterDataSetChanged()
   }
 }

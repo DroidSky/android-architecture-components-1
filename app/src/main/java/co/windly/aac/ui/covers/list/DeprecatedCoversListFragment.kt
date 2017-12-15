@@ -14,11 +14,12 @@ import org.apache.commons.lang3.StringUtils
 import java.util.*
 import javax.inject.Inject
 
-class CoversListFragment : DeprecatedBaseListFragment<Cover>(), CoverListItem.Handler {
+@Deprecated("mvvm-rewrite")
+class DeprecatedCoversListFragment : DeprecatedBaseListFragment<Cover>(), CoverListItem.Handler {
 
   companion object {
 
-    fun newInstance() = CoversListFragment()
+    fun newInstance() = DeprecatedCoversListFragment()
   }
 
   @Inject

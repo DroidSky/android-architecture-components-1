@@ -6,6 +6,7 @@ import co.windly.aac.data.domain.models.publishinghouses.PublishingHouse
 import co.windly.aac.ui.base.DeprecatedBaseListFragment
 import kotlinx.android.synthetic.main.item_publishing_houses_list.view.*
 
+@Deprecated("mvvm-rewrite")
 class PublishingHouseListItem(
   val house: PublishingHouse,
   private val handler: Handler

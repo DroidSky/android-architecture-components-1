@@ -1,6 +1,6 @@
 package co.windly.aac.ui.covers
 
-import co.windly.aac.ui.covers.list.CoversListFragment
+import co.windly.aac.ui.covers.list.DeprecatedCoversListFragment
 import co.windly.aac.ui.covers.list.CoversListModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -9,5 +9,5 @@ import dagger.android.ContributesAndroidInjector
 abstract class CoversFragmentProvider {
 
   @ContributesAndroidInjector(modules = [CoversListModule::class])
-  abstract fun provideCoversListFragmentFactory(): CoversListFragment
+  abstract fun provideCoversListFragmentFactory(): DeprecatedCoversListFragment
 }

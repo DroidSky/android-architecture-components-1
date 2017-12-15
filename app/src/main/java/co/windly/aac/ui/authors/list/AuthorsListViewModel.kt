@@ -21,7 +21,7 @@ class AuthorsListViewModel(
   }
 
   fun deleteAuthor(authorId: Long) {
-    getCompositeDisposable().addAll(getDataManager()
+    getCompositeDisposable().add(getDataManager()
       .deleteAuthor(authorId)
       .subscribeOn(getSchedulerProvider().io())
       .observeOn(getSchedulerProvider().ui())

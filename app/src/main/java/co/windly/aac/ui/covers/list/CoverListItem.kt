@@ -6,6 +6,7 @@ import co.windly.aac.data.domain.models.covers.Cover
 import co.windly.aac.ui.base.DeprecatedBaseListFragment
 import kotlinx.android.synthetic.main.item_covers_list.view.*
 
+@Deprecated("mvvm-rewrite")
 class CoverListItem(
   val cover: Cover,
   private val handler: Handler

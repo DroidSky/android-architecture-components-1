@@ -12,8 +12,8 @@ class BooksNetworkManager @Inject constructor() {
   @Inject lateinit var service: BooksService
   @Inject lateinit var mapper: ModelMapper
 
-  fun getBooks(): Observable<List<Book>> {
-    return this.service.getBooks()
+  fun getBooks(active: Boolean? = null): Observable<List<Book>> {
+    return this.service.getBooks(active)
       .flatMapIterable { it }
       .map { this.mapper.map(it, Book::class.java) }
       .toList()

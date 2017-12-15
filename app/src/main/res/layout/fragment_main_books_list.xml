@@ -9,7 +9,7 @@
 
 		<variable
 			name="viewModel"
-			type="co.windly.aac.ui.authors.list.AuthorsListViewModel" />
+			type="co.windly.aac.ui.books.list.BooksListViewModel" />
 	</data>
 
 
@@ -23,8 +23,8 @@
 			android:id="@+id/recyclerView"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			app:adapter="@{viewModel.authorsObservableArrayList}"
-			tools:listitem="@layout/item_authors_list" />
+			app:adapter="@{viewModel.booksObservableArrayList}"
+			tools:listitem="@layout/item_books_list" />
 
 	</android.support.v4.widget.SwipeRefreshLayout>
 

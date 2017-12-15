@@ -14,11 +14,12 @@ import org.apache.commons.lang3.StringUtils
 import java.util.*
 import javax.inject.Inject
 
-class PublishingHousesListFragment : DeprecatedBaseListFragment<PublishingHouse>(), PublishingHouseListItem.Handler {
+@Deprecated("mvvm-rewrite")
+class DeprecatedPublishingHousesListFragment : DeprecatedBaseListFragment<PublishingHouse>(), PublishingHouseListItem.Handler {
 
   companion object {
 
-    fun newInstance() = PublishingHousesListFragment()
+    fun newInstance() = DeprecatedPublishingHousesListFragment()
   }
 
   @Inject
