@@ -29,14 +29,16 @@ class AuthorsListAdapter : RecyclerView.Adapter<BaseViewHolder> {
   }
 
   override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): BaseViewHolder {
+    val inflater = LayoutInflater.from(parent?.context)
+
     return when (viewType) {
       VIEW_TYPE_NORMAL -> {
-        val itemsAuthorsListBinding = ItemAuthorsListBinding.inflate(LayoutInflater.from(parent?.context), parent, false)
-        AuthorViewHolder(itemsAuthorsListBinding)
+        val binding = ItemAuthorsListBinding.inflate(inflater, parent, false)
+        AuthorViewHolder(binding)
       }
       VIEW_TYPE_EMPTY -> {
-        val itemEmptyListBinding = ItemEmptyListBinding.inflate(LayoutInflater.from(parent?.context), parent, false)
-        EmptyItemViewHolder(itemEmptyListBinding, listener)
+        val binding = ItemEmptyListBinding.inflate(inflater, parent, false)
+        EmptyItemViewHolder(binding, listener)
       }
       else -> {
         throw IllegalArgumentException("Unknown view type.")
