@@ -12,8 +12,8 @@ class CoversNetworkManager @Inject constructor() {
   @Inject lateinit var service: CoversService
   @Inject lateinit var mapper: ModelMapper
 
-  fun getCovers(): Observable<List<Cover>> {
-    return this.service.getCovers()
+  fun getCovers(active: Boolean? = true): Observable<List<Cover>> {
+    return this.service.getCovers(active)
       .flatMapIterable { it }
       .map { this.mapper.map(it, Cover::class.java) }
       .toList()

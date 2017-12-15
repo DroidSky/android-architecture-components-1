@@ -7,6 +7,7 @@ import co.windly.aac.data.domain.models.books.Book
 import co.windly.aac.ui.base.BaseViewModel
 import co.windly.aac.utilities.AacLogger
 import co.windly.aac.utilities.rx.SchedulerProvider
+import io.reactivex.rxkotlin.plusAssign
 
 class BooksListViewModel(
   dataManager: DataManager,
@@ -21,7 +22,7 @@ class BooksListViewModel(
   }
 
   fun deleteBook(bookId: Long) {
-    getCompositeDisposable().add(getDataManager()
+    getCompositeDisposable() += getDataManager()
       .deleteBook(bookId)
       .subscribeOn(getSchedulerProvider().io())
       .observeOn(getSchedulerProvider().ui())
@@ -32,12 +33,11 @@ class BooksListViewModel(
         },
         { AacLogger.e(it.localizedMessage) }
       )
-    )
   }
 
   fun loadBooks() {
     this.setIsLoading(true)
-    getCompositeDisposable().addAll(getDataManager()
+    getCompositeDisposable() += getDataManager()
       .getBooks(active = true)
       .subscribeOn(getSchedulerProvider().io())
       .observeOn(getSchedulerProvider().ui())
@@ -45,7 +45,7 @@ class BooksListViewModel(
       .subscribe(
         { this.booksListLiveData.value = mutableListOf(*it.toTypedArray()) },
         { AacLogger.e(it.localizedMessage) }
-      ))
+      )
   }
 
   fun getBooksListLiveData(): MutableLiveData<MutableList<Book>>

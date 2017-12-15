@@ -95,7 +95,6 @@ class BooksListAdapter : RecyclerView.Adapter<BaseViewHolder> {
   }
 
   interface BooksListAdapterListener : EmptyItemViewModel.EmptyItemViewModelListener {
-
     fun onDeleteClick(bookId: Long)
   }
 }

@@ -2,6 +2,7 @@ package co.windly.aac.data
 
 import co.windly.aac.data.domain.models.authors.Author
 import co.windly.aac.data.domain.models.books.Book
+import co.windly.aac.data.domain.models.covers.Cover
 import io.reactivex.Observable
 
 interface DataManager {
@@ -13,4 +14,8 @@ interface DataManager {
   fun getBooks(active: Boolean? = null): Observable<List<Book>>
 
   fun deleteBook(bookId: Long): Observable<Boolean>
+
+  fun getCovers(active: Boolean? = null): Observable<List<Cover>>
+
+  fun deleteCover(coverId: Long): Observable<Boolean>
 }

@@ -5,8 +5,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import co.windly.aac.data.domain.models.authors.Author
 import co.windly.aac.data.domain.models.books.Book
+import co.windly.aac.data.domain.models.covers.Cover
 import co.windly.aac.ui.authors.list.AuthorsListAdapter
 import co.windly.aac.ui.books.list.BooksListAdapter
+import co.windly.aac.ui.covers.list.CoversListAdapter
 
 class BindingUtils private constructor() {
 
@@ -29,6 +31,16 @@ class BindingUtils private constructor() {
         val adapter = it as BooksListAdapter
         adapter.clearItems()
         adapter.addItems(books)
+      }
+    }
+
+    @JvmStatic
+    @BindingAdapter("adapter")
+    fun addCoversListItems(recyclerView: RecyclerView, covers: ArrayList<Cover>) {
+      recyclerView.adapter?.let {
+        val adapter = it as CoversListAdapter
+        adapter.clearItems()
+        adapter.addItems(covers)
       }
     }
 

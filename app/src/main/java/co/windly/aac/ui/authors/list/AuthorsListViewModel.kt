@@ -7,6 +7,7 @@ import co.windly.aac.data.domain.models.authors.Author
 import co.windly.aac.ui.base.BaseViewModel
 import co.windly.aac.utilities.AacLogger
 import co.windly.aac.utilities.rx.SchedulerProvider
+import io.reactivex.rxkotlin.plusAssign
 
 class AuthorsListViewModel(
   dataManager: DataManager,
@@ -21,7 +22,7 @@ class AuthorsListViewModel(
   }
 
   fun deleteAuthor(authorId: Long) {
-    getCompositeDisposable().add(getDataManager()
+    getCompositeDisposable() += getDataManager()
       .deleteAuthor(authorId)
       .subscribeOn(getSchedulerProvider().io())
       .observeOn(getSchedulerProvider().ui())
@@ -31,12 +32,12 @@ class AuthorsListViewModel(
           this.authorsListLiveData.value?.removeAll { it.id == authorId }
         },
         { AacLogger.e(it.localizedMessage) }
-      ))
+      )
   }
 
   fun loadAuthors() {
     this.setIsLoading(true)
-    getCompositeDisposable().add(getDataManager()
+    getCompositeDisposable() += getDataManager()
       .getAuthors(active = true)
       .subscribeOn(getSchedulerProvider().io())
       .observeOn(getSchedulerProvider().ui())
@@ -44,7 +45,7 @@ class AuthorsListViewModel(
       .subscribe(
         { this.authorsListLiveData.value = mutableListOf(*it.toTypedArray()) },
         { AacLogger.e(it.localizedMessage) }
-      ))
+      )
   }
 
   fun getAuthorsListLiveData(): MutableLiveData<MutableList<Author>>
