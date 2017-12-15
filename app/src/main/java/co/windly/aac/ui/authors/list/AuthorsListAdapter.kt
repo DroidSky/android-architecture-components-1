@@ -4,9 +4,11 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import co.windly.aac.data.domain.models.authors.Author
-import co.windly.aac.databinding.ItemAuthorsEmptyListBinding
 import co.windly.aac.databinding.ItemAuthorsListBinding
+import co.windly.aac.databinding.ItemEmptyListBinding
 import co.windly.aac.ui.base.BaseViewHolder
+import co.windly.aac.ui.empty.EmptyItemViewHolder
+import co.windly.aac.ui.empty.EmptyItemViewModel
 
 class AuthorsListAdapter : RecyclerView.Adapter<BaseViewHolder> {
 
@@ -33,8 +35,8 @@ class AuthorsListAdapter : RecyclerView.Adapter<BaseViewHolder> {
         AuthorViewHolder(itemsAuthorsListBinding)
       }
       VIEW_TYPE_EMPTY -> {
-        val itemsAuthorsEmptyListBinding = ItemAuthorsEmptyListBinding.inflate(LayoutInflater.from(parent?.context), parent, false)
-        EmptyAuthorViewHolder(itemsAuthorsEmptyListBinding)
+        val itemEmptyListBinding = ItemEmptyListBinding.inflate(LayoutInflater.from(parent?.context), parent, false)
+        EmptyItemViewHolder(itemEmptyListBinding, listener)
       }
       else -> {
         throw IllegalArgumentException("Unknown view type.")
@@ -90,27 +92,8 @@ class AuthorsListAdapter : RecyclerView.Adapter<BaseViewHolder> {
     }
   }
 
-  inner class EmptyAuthorViewHolder : BaseViewHolder, AuthorsListEmptyItemViewModel.AuthorsListEmptyItemViewModelListener {
-
-    private val binding: ItemAuthorsEmptyListBinding
-
-    constructor(binding: ItemAuthorsEmptyListBinding) : super(binding.root) {
-      this.binding = binding
-    }
-
-    override fun onBind(position: Int) {
-      this.binding.viewModel = AuthorsListEmptyItemViewModel(this)
-    }
-
-    override fun onRetryClick() {
-      listener.onRetryClick()
-    }
-  }
-
-  interface AuthorsListAdapterListener {
+  interface AuthorsListAdapterListener : EmptyItemViewModel.EmptyItemViewModelListener {
 
     fun onDeleteClick(authorId: Long)
-
-    fun onRetryClick()
   }
 }
