@@ -21,7 +21,7 @@ class AuthorsListAdapter : RecyclerView.Adapter<BaseViewHolder> {
   private lateinit var listener: AuthorsListAdapterListener
 
   constructor(authorsList: List<Author>) {
-    this.authorsList = mutableListOf<Author>().apply { this.addAll(authorsList) }
+    this.authorsList = mutableListOf(*authorsList.toTypedArray())
   }
 
   override fun onBindViewHolder(holder: BaseViewHolder?, position: Int) {
