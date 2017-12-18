@@ -21,7 +21,6 @@
 
 		<activity
 			android:name=".ui.splash.SplashActivity"
-			android:noHistory="true"
 			android:resizeableActivity="false"
 			android:screenOrientation="sensorPortrait"
 			android:theme="@style/AppTheme.Fullscreen">

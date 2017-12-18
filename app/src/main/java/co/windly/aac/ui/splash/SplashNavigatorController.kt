@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import co.windly.aac.ui.main.MainActivity
-import co.windly.aac.utilities.AacLogger
 import javax.inject.Inject
 
 class SplashNavigatorController : SplashNavigator {
@@ -20,6 +19,5 @@ class SplashNavigatorController : SplashNavigator {
     val intent = Intent(this.context, MainActivity::class.java)
     val bundle = Bundle()
     this.context.startActivity(intent, bundle)
-    // TODO: Add animation.
   }
 }

@@ -3,6 +3,7 @@ package co.windly.aac.ui.base
 import android.annotation.TargetApi
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
@@ -10,6 +11,7 @@ import android.os.Build
 import android.os.Bundle
 import android.support.annotation.LayoutRes
 import android.view.inputmethod.InputMethodManager
+import co.windly.aac.R
 import co.windly.aac.utilities.CommonUtils
 import co.windly.aac.utilities.NetworkUtils
 import dagger.android.AndroidInjection
@@ -26,6 +28,16 @@ abstract class BaseActivity<out T : ViewDataBinding, out V : BaseViewModel<*>> :
     super.onCreate(savedInstanceState)
     this.performDependencyInjection()
     this.performDataBinding()
+  }
+
+  override fun onBackPressed() {
+    super.onBackPressed()
+    this.overridePendingTransition(R.anim.activity_enter_ios_alike_from_left, R.anim.actibity_exit_ios_alike_to_right)
+  }
+
+  override fun startActivity(intent: Intent?, options: Bundle?) {
+    super.startActivity(intent, options)
+    this.overridePendingTransition(R.anim.activity_enter_ios_alike_from_right, R.anim.activity_exit_ios_alike_to_left)
   }
 
   private fun performDataBinding() {
