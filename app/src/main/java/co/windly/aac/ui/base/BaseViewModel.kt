@@ -6,10 +6,11 @@ import co.windly.aac.data.DataManager
 import co.windly.aac.utilities.rx.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
 
-abstract class BaseViewModel<N> : ViewModel {
+abstract class BaseViewModel<N : Any> : ViewModel {
 
   private val dataManager: DataManager
   private val schedulerProvider: SchedulerProvider
+  private lateinit var navigator: N
   private val compositeDisposable: CompositeDisposable
   private val isLoading = ObservableBoolean(false)
 
@@ -22,6 +23,12 @@ abstract class BaseViewModel<N> : ViewModel {
   fun getDataManager() = this.dataManager
 
   fun getSchedulerProvider() = this.schedulerProvider
+
+  fun setNavigator(navigator: N) {
+    this.navigator = navigator
+  }
+
+  fun getNavigator(): N = this.navigator
 
   fun getCompositeDisposable() = this.compositeDisposable
 

@@ -9,7 +9,7 @@
 
 		<variable
 			name="viewModel"
-			type="co.windly.aac.ui.authors.list.AuthorsListViewModel" />
+			type="co.windly.aac.ui.main.authors.list.AuthorsListViewModel" />
 	</data>
 
 

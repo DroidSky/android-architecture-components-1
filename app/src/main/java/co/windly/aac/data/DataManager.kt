@@ -4,9 +4,12 @@ import co.windly.aac.data.domain.models.authors.Author
 import co.windly.aac.data.domain.models.books.Book
 import co.windly.aac.data.domain.models.covers.Cover
 import co.windly.aac.data.domain.models.publishinghouses.PublishingHouse
+import io.reactivex.Completable
 import io.reactivex.Observable
 
 interface DataManager {
+
+  fun initialize(): Completable
 
   fun getAuthors(active: Boolean? = null): Observable<List<Author>>
 

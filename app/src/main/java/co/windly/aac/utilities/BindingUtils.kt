@@ -7,10 +7,10 @@ import co.windly.aac.data.domain.models.authors.Author
 import co.windly.aac.data.domain.models.books.Book
 import co.windly.aac.data.domain.models.covers.Cover
 import co.windly.aac.data.domain.models.publishinghouses.PublishingHouse
-import co.windly.aac.ui.authors.list.AuthorsListAdapter
-import co.windly.aac.ui.books.list.BooksListAdapter
-import co.windly.aac.ui.covers.list.CoversListAdapter
-import co.windly.aac.ui.publishinghouses.list.PublishingHousesListAdapter
+import co.windly.aac.ui.main.authors.list.AuthorsListAdapter
+import co.windly.aac.ui.main.books.list.BooksListAdapter
+import co.windly.aac.ui.main.covers.list.CoversListAdapter
+import co.windly.aac.ui.main.publishinghouses.list.PublishingHousesListAdapter
 
 class BindingUtils private constructor() {
 

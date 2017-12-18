@@ -14,35 +14,35 @@ class AacLogger private constructor() {
     }
 
     fun d(text: String, vararg objects: Any) {
-      Timber.d(text, objects)
+      Timber.d(text, *objects)
     }
 
     fun d(throwable: Throwable, text: String, vararg objects: Any) {
-      Timber.d(throwable, text, objects)
+      Timber.d(throwable, text, *objects)
     }
 
     fun i(text: String, vararg objects: Any) {
-      Timber.i(text, objects)
+      Timber.i(text, *objects)
     }
 
     fun i(throwable: Throwable, text: String, vararg objects: Any) {
-      Timber.i(throwable, text, objects)
+      Timber.i(throwable, text, *objects)
     }
 
     fun w(text: String, vararg objects: Any) {
-      Timber.w(text, objects)
+      Timber.w(text, *objects)
     }
 
     fun w(throwable: Throwable, text: String, vararg objects: Any) {
-      Timber.w(throwable, text, objects)
+      Timber.w(throwable, text, *objects)
     }
 
     fun e(text: String, vararg objects: Any) {
-      Timber.e(text, objects)
+      Timber.e(text, *objects)
     }
 
     fun e(throwable: Throwable, text: String, vararg objects: Any) {
-      Timber.e(throwable, text, objects)
+      Timber.e(throwable, text, *objects)
     }
   }
 }

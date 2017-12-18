@@ -9,7 +9,7 @@
 
 		<variable
 			name="viewModel"
-			type="co.windly.aac.ui.publishinghouses.list.PublishingHousesListItemViewModel" />
+			type="co.windly.aac.ui.main.publishinghouses.list.PublishingHousesListItemViewModel" />
 	</data>
 
 	<android.support.v7.widget.CardView

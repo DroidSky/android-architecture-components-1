@@ -8,7 +8,9 @@ import co.windly.aac.data.network.managers.authors.AuthorsNetworkManager
 import co.windly.aac.data.network.managers.books.BooksNetworkManager
 import co.windly.aac.data.network.managers.covers.CoversNetworkManager
 import co.windly.aac.data.network.managers.publishinghouses.PublishingHousesNetworkManager
+import io.reactivex.Completable
 import io.reactivex.Observable
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -26,6 +28,9 @@ class AacDataManager @Inject constructor() : DataManager {
 
   @Inject
   lateinit var publishingHousesNetworkManager: PublishingHousesNetworkManager
+
+  override fun initialize(): Completable
+    = Completable.timer(2, TimeUnit.SECONDS)
 
   override fun getAuthors(active: Boolean?): Observable<List<Author>>
     = this.authorsNetworkManager.getAuthors(active)
